@@ -10,6 +10,10 @@ public class Park {
             this.schedule = schedule;
             this.cost = cost;
         }
+
+        public void info() {
+            System.out.println(title + " / " + schedule + " / " + cost + "RUB");
+        }
     }
 
 }

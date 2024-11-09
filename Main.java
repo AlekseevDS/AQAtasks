@@ -9,13 +9,16 @@ public class Main {
         employeesArray[3] = new Employee("Anna", "Developer", "a.ferk@gmail.com", 77865456, 28);
         employeesArray[4] = new Employee("Kate", "Manager", "k.amali@gmail.com", 77865487, 32);
 
-        //проверка метода info()
+        //проверка метода info() у Employee
         for (Employee person : employeesArray) {
             person.info();
             System.out.println();
         }
 
         //создание объекта Attraction
-        Park.Attraction rollerCoaster = new Park().new Attraction("Roller Coaster", "Mo-Fr 9-20", 40);
+        Park.Attraction rollerCoaster = new Park().new Attraction("Roller Coaster", "Mo-Fr 9-20", 400);
+
+        //проверка метода info() у Attraction
+        rollerCoaster.info();
     }
 }
