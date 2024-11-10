@@ -1,6 +1,6 @@
 package animals;
 
 public interface AnimalActions {
-    void run(int distance);
-    void  swim(int distance);
+    String run(int distance);
+    String  swim(int distance);
 }
