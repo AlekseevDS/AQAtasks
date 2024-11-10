@@ -1,9 +1,9 @@
 public class Employee {
-    String name;
-    String position;
-    String email;
-    int phone;
-    int age;
+    private String name;
+    private String position;
+    private String email;
+    private int phone;
+    private int age;
 
     public Employee(String name, String position, String email, int phone, int age) {
         this.name = name;

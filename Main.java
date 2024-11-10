@@ -1,3 +1,4 @@
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,10 +16,11 @@ public class Main {
             System.out.println();
         }
 
-        //создание объекта Attraction
-        Park.Attraction rollerCoaster = new Park().new Attraction("Roller Coaster", "Mo-Fr 9-20", 400);
+        //проверка Park и Attraction
+        Park gorky = new Park("Gorky");
+        gorky.addAttraction("Roller Coaster", "Mo-Fr 9-20", 400);
+        gorky.addAttraction("Trampoline", "Mo-Fr 9-19", 200);
 
-        //проверка метода info() у Attraction
-        rollerCoaster.info();
+        gorky.attractionsInfo();
     }
 }
