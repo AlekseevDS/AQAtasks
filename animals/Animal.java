@@ -7,6 +7,7 @@ public abstract class Animal implements AnimalActions {
 
     protected String name;
     private static List<Animal> animalList = new ArrayList<>();
+
     public enum AnimalsType {CAT, DOG}
 
     public static List<Animal> getAnimalList() {

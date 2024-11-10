@@ -2,8 +2,14 @@ package animals;
 
 public class Cat extends Animal {
 
+    private boolean satiety;
+
     public Cat(String name) {
         super(name);
+    }
+
+    public boolean isSatiety() {
+        return satiety;
     }
 
     @Override
@@ -22,5 +28,32 @@ public class Cat extends Animal {
     @Override
     public String swim(int distance) {
         return this.name + " не умеет плавать.";
+    }
+
+    public void eat(Bowl foodBowl) {
+        int foodPortion = 15;
+        int amountFoodInBowl = foodBowl.getFoodAmount();
+
+        if (amountFoodInBowl > foodPortion) {
+            foodBowl.changeBowlAmount(-foodPortion);
+            satiety = true;
+        }
+    }
+
+    //Кошачья миска
+    public static class Bowl {
+        private int foodAmount;
+
+        public Bowl(int foodAmount) {
+            this.foodAmount = foodAmount;
+        }
+
+        public int getFoodAmount() {
+            return foodAmount;
+        }
+
+        public void changeBowlAmount(int changeQuantity) {
+            this.foodAmount += changeQuantity;
+        }
     }
 }

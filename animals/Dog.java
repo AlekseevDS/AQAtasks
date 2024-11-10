@@ -7,7 +7,7 @@ public class Dog extends Animal {
     }
 
     @Override
-   public String run(int distance) {
+    public String run(int distance) {
         int canRun = 500;
         int runDistance = canRun - distance;
         String result = name + " пробежал: ";
@@ -31,5 +31,4 @@ public class Dog extends Animal {
             return result + canSwim + "м. Дистанция не пройдена.";
         }
     }
-
 }
