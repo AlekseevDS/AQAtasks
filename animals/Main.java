@@ -34,7 +34,7 @@ public class Main {
         for (Animal animal : Animal.getAnimalList()) {
             if (animal instanceof Cat) {
                 ((Cat) animal).eat(bowlForCat);
-                System.out.println(animal.name + "satiety status: " + ((Cat) animal).isSatiety());
+                System.out.println(animal.name + " satiety status: " + ((Cat) animal).isSatiety());
                 System.out.println("Осталось в миске: " + bowlForCat.getFoodAmount());
             }
         }
