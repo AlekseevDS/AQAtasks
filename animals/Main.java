@@ -29,7 +29,7 @@ public class Main {
         }
 
         //Кормление котов
-        Cat.Bowl bowlForCat = new Cat.Bowl(40);
+        Bowl bowlForCat = new Bowl(40);
 
         for (Animal animal : Animal.getAnimalList()) {
             if (animal instanceof Cat) {

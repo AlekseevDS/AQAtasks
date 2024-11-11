@@ -39,21 +39,4 @@ public class Cat extends Animal {
             satiety = true;
         }
     }
-
-    //Кошачья миска
-    public static class Bowl {
-        private int foodAmount;
-
-        public Bowl(int foodAmount) {
-            this.foodAmount = foodAmount;
-        }
-
-        public int getFoodAmount() {
-            return foodAmount;
-        }
-
-        public void changeBowlAmount(int changeQuantity) {
-            this.foodAmount += changeQuantity;
-        }
-    }
 }
