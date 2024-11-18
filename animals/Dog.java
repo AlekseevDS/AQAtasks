@@ -2,8 +2,15 @@ package animals;
 
 public class Dog extends Animal {
 
+    private static int dogCounter;
+
     public Dog(String name) {
         super(name);
+        dogCounter++;
+    }
+
+    public static int getDogCounter() {
+        return dogCounter;
     }
 
     @Override

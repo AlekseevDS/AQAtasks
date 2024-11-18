@@ -3,9 +3,15 @@ package animals;
 public class Cat extends Animal {
 
     private boolean satiety;
+    private static int catCounter;
 
     public Cat(String name) {
         super(name);
+        catCounter++;
+    }
+
+    public static int getCatCounter() {
+        return catCounter;
     }
 
     public boolean isSatiety() {
