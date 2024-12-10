@@ -1,8 +1,9 @@
 package collections;
 
 import java.util.*;
-import static collections.WordsUtils.uniqWords;
-import static collections.WordsUtils.wordsCounter;
+
+import static collections.WordsUtils.uniqWord;
+import static collections.WordsUtils.wordCounter;
 
 public class Main {
 
@@ -21,8 +22,8 @@ public class Main {
         testPhoneBook.add(4532, "Карпов");
         testPhoneBook.add(6754, "Иванов");
 
-        uniqWords(cityList);
-        wordsCounter(cityList);
+        uniqWord(cityList);
+        wordCounter(cityList);
         testPhoneBook.get("Иванов");
     }
 }

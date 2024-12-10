@@ -3,15 +3,15 @@ package collections;
 import java.util.*;
 
 public class WordsUtils {
-    protected static void uniqWords(ArrayList<String> list) {
+    protected static void uniqWord(ArrayList<String> list) {
         System.out.println(new HashSet<>(List.of(list.toArray())));
     }
 
-    protected static void wordsCounter(ArrayList<String> list) {
-        Map<String, Integer> cityCount = new HashMap<>();
-        for (String city : list) {
-            cityCount.put(city, cityCount.getOrDefault(city, 0) + 1);
+    protected static void wordCounter(ArrayList<String> list) {
+        Map<String, Integer> wordCounterMap = new HashMap<>();
+        for (String word : list) {
+            wordCounterMap.put(word, wordCounterMap.getOrDefault(word, 0) + 1);
         }
-        System.out.println(cityCount);
+        System.out.println(wordCounterMap);
     }
 }
