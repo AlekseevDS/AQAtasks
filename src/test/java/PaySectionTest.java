@@ -15,20 +15,18 @@ import java.util.NoSuchElementException;
 public class PaySectionTest {
 
     private WebDriver driver;
-    private WebElement textNamePayBlock;
+    private WebElement linkDetails;
+    private WebDriverWait wait;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://www.mts.by/");
         driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        textNamePayBlock = driver.findElement(By.xpath("//div[@class='pay__wrapper']/h2"));
-
-        //Если появляется окно Cookies
         WebElement buttonCancelCookie = driver.findElement(By.xpath("//div[@class='cookie__buttons']/button[2]"));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(buttonCancelCookie));
             buttonCancelCookie.click();
@@ -36,73 +34,74 @@ public class PaySectionTest {
             System.out.println("Cookies нет.Кнопка 'Отказаться' не найдена.");
         }
 
+        linkDetails = driver.findElement(By.linkText("Подробнее о сервисе"));
         Actions actions = new Actions(driver);
-        actions.moveToElement(textNamePayBlock).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(linkDetails));
+        actions.moveToElement(linkDetails).perform();
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
-        // Закрываем браузер
         if (driver != null) {
             driver.quit();
         }
     }
 
-
     @Test
     public void testNamePayBlock() {
-        Assert.assertEquals(textNamePayBlock.getText(),"Онлайн пополнение\nбез комиссии");
+        WebElement textNamePayBlock = driver.findElement(By.xpath("//div[@class='pay__wrapper']/h2"));
+        Assert.assertEquals(textNamePayBlock.getText(), "Онлайн пополнение\nбез комиссии");
     }
-
 
     @Test
     public void testImgVisaVerif() {
-        WebElement imgVerifVisa = driver.findElement(By.xpath("//img[@alt='Verified By Visa']"));
-        boolean isElementPresent = !driver.findElements((By) imgVerifVisa).isEmpty();
+        By imgVerifVisa = By.xpath("//img[@alt='Visa']");
+        boolean isElementPresent = !driver.findElements(imgVerifVisa).isEmpty();
         Assert.assertTrue(isElementPresent);
     }
 
     @Test
     public void testImgMc() {
-        WebElement imgMasterCard = driver.findElement(By.xpath("//img[@alt='MasterCard']"));
-        boolean isElementPresent = !driver.findElements((By) imgMasterCard).isEmpty();
+        By imgMasterCard = By.xpath("//img[@alt='MasterCard']");
+        boolean isElementPresent = !driver.findElements(imgMasterCard).isEmpty();
         Assert.assertTrue(isElementPresent);
     }
 
     @Test
     public void testImgMcSec() {
-        WebElement imgMasterCardSec = driver.findElement(By.xpath("//img[@alt='MasterCard Secure Code']"));
-        boolean isElementPresent = !driver.findElements((By) imgMasterCardSec).isEmpty();
+        By imgMasterCardSec = By.xpath("//img[@alt='MasterCard Secure Code']");
+        boolean isElementPresent = !driver.findElements(imgMasterCardSec).isEmpty();
         Assert.assertTrue(isElementPresent);
     }
 
     @Test
     public void testImgBelCard() {
-        WebElement imgBelCard = driver.findElement(By.xpath("//img[@alt='Белкарт']"));
-        boolean isElementPresent = !driver.findElements((By) imgBelCard).isEmpty();
+        By imgBelCard = By.xpath("//img[@alt='Белкарт']");
+        boolean isElementPresent = !driver.findElements(imgBelCard).isEmpty();
         Assert.assertTrue(isElementPresent);
     }
 
-
     @Test
     public void testLinkDetails() {
-        WebElement linkDetails = driver.findElement(By.linkText("Подробнее о сервисе"));
         linkDetails.click();
         Assert.assertEquals(driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
     }
 
     @Test
     public void testPayForm() {
-        WebElement inputPhoneNumber = driver.findElement(By.id("connection-phone"));
-        WebElement inputAmountMoney = driver.findElement(By.id("connection-sum"));
-        WebElement buttonSubmitPay = driver.findElement(By.className("button button__default "));
-        WebElement spanSubmitPay = driver.findElement(By.linkText("Оплата: Услуги связи\n" +
-                "Номер:375297777777"));
+        WebElement inputPhoneNumber = driver.findElement(By.xpath("//input[@class='phone']"));
+        WebElement inputAmountMoney = driver.findElement(By.xpath("//input[@class='total_rub']"));
+        WebElement buttonSubmitPay = driver.findElement(By.xpath("//form[@class='pay-form opened']/button"));
 
         inputPhoneNumber.sendKeys("297777777");
         inputAmountMoney.sendKeys("30");
         buttonSubmitPay.click();
-        Assert.assertEquals(spanSubmitPay.getText(), "Оплата: Услуги связи\n" +
-                "Номер:375297777777");
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//iframe[@class='bepaid-iframe']")));
+        System.out.println(driver.getTitle());
+
+        WebElement spanSubmitPay =  wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@class='pay-description__text']/span")));
+
+        Assert.assertEquals(spanSubmitPay.getText(), "Оплата: Услуги связи Номер:375297777777");
     }
 }
