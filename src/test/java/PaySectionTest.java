@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -53,9 +54,53 @@ public class PaySectionTest {
         Assert.assertEquals(textNamePayBlock.getText(), "Онлайн пополнение\nбез комиссии");
     }
 
+
+    @Test
+    public void testPaymentsLogos() {
+        SoftAssert softAssert = new SoftAssert();
+
+        By imgVisa = By.xpath("//img[@alt='Visa']");
+        By imgVerifiedByVisa = By.xpath("//img[@alt='Verified By Visa']");
+        By imgMasterCard = By.xpath("//img[@alt='MasterCard']");
+        By imgMasterCardSecureCode = By.xpath("//img[@alt='MasterCard Secure Code']");
+        By imgBelCard = By.xpath("//img[@alt='Белкарт']");
+
+        softAssert.assertTrue(isElementDisplayed(imgVisa), "Логотип 'Visa' не отображается.");
+        softAssert.assertTrue(isElementDisplayed(imgVerifiedByVisa), "Логотип 'Verified By Visa' не отображается.");
+        softAssert.assertTrue(isElementDisplayed(imgMasterCard), "Логотип 'MasterCard' не отображается.");
+        softAssert.assertTrue(isElementDisplayed(imgMasterCardSecureCode), "Логотип 'MasterCard Secure Code' не отображается.");
+        softAssert.assertTrue(isElementDisplayed(imgBelCard), "Логотип 'Белкарт' не отображается.");
+
+        int expectedLogoCount = 5;
+        int actualLogoCount = driver.findElements(By.xpath("//div[@class='pay__partners']//img")).size();
+        System.out.println(actualLogoCount);
+        softAssert.assertEquals(actualLogoCount, expectedLogoCount, "Количество логотипов не соответствует ожидаемому.");
+
+        softAssert.assertAll();
+    }
+
+    private boolean isElementDisplayed(By locator) {
+        try {
+            WebElement element = driver.findElement(locator);
+            System.out.println("Есть" + locator.toString());
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+
+
+/*    @Test
+    public void testImgVisa() {
+        By imgVisa = By.xpath("//img[@alt='Visa']");
+        boolean isElementPresent = !driver.findElements(imgVisa).isEmpty();
+        Assert.assertTrue(isElementPresent);
+    }
+
     @Test
     public void testImgVisaVerif() {
-        By imgVerifVisa = By.xpath("//img[@alt='Visa']");
+        By imgVerifVisa = By.xpath("//img[@alt='Verified By Visa']");
         boolean isElementPresent = !driver.findElements(imgVerifVisa).isEmpty();
         Assert.assertTrue(isElementPresent);
     }
@@ -79,7 +124,7 @@ public class PaySectionTest {
         By imgBelCard = By.xpath("//img[@alt='Белкарт']");
         boolean isElementPresent = !driver.findElements(imgBelCard).isEmpty();
         Assert.assertTrue(isElementPresent);
-    }
+    }*/
 
     @Test
     public void testLinkDetails() {
