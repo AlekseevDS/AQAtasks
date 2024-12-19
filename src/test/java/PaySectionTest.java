@@ -54,7 +54,6 @@ public class PaySectionTest {
         Assert.assertEquals(textNamePayBlock.getText(), "Онлайн пополнение\nбез комиссии");
     }
 
-
     @Test
     public void testPaymentsLogos() {
         SoftAssert softAssert = new SoftAssert();
@@ -73,7 +72,6 @@ public class PaySectionTest {
 
         int expectedLogoCount = 5;
         int actualLogoCount = driver.findElements(By.xpath("//div[@class='pay__partners']//img")).size();
-        System.out.println(actualLogoCount);
         softAssert.assertEquals(actualLogoCount, expectedLogoCount, "Количество логотипов не соответствует ожидаемому.");
 
         softAssert.assertAll();
@@ -82,54 +80,20 @@ public class PaySectionTest {
     private boolean isElementDisplayed(By locator) {
         try {
             WebElement element = driver.findElement(locator);
-            System.out.println("Есть" + locator.toString());
             return element.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-
-
-/*    @Test
-    public void testImgVisa() {
-        By imgVisa = By.xpath("//img[@alt='Visa']");
-        boolean isElementPresent = !driver.findElements(imgVisa).isEmpty();
-        Assert.assertTrue(isElementPresent);
-    }
-
-    @Test
-    public void testImgVisaVerif() {
-        By imgVerifVisa = By.xpath("//img[@alt='Verified By Visa']");
-        boolean isElementPresent = !driver.findElements(imgVerifVisa).isEmpty();
-        Assert.assertTrue(isElementPresent);
-    }
-
-    @Test
-    public void testImgMc() {
-        By imgMasterCard = By.xpath("//img[@alt='MasterCard']");
-        boolean isElementPresent = !driver.findElements(imgMasterCard).isEmpty();
-        Assert.assertTrue(isElementPresent);
-    }
-
-    @Test
-    public void testImgMcSec() {
-        By imgMasterCardSec = By.xpath("//img[@alt='MasterCard Secure Code']");
-        boolean isElementPresent = !driver.findElements(imgMasterCardSec).isEmpty();
-        Assert.assertTrue(isElementPresent);
-    }
-
-    @Test
-    public void testImgBelCard() {
-        By imgBelCard = By.xpath("//img[@alt='Белкарт']");
-        boolean isElementPresent = !driver.findElements(imgBelCard).isEmpty();
-        Assert.assertTrue(isElementPresent);
-    }*/
-
     @Test
     public void testLinkDetails() {
         linkDetails.click();
         Assert.assertEquals(driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
+
+        WebElement expectedContent = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//h3[contains(text(), 'Оплата банковской картой')]")));
+        Assert.assertTrue(expectedContent.isDisplayed(), "Ожидаемый контент на странице не отображается.");
     }
 
     @Test
