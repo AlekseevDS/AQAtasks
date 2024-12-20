@@ -1,7 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,7 +9,7 @@ import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
+import java.util.List;
 
 public class PaySectionTest {
 
@@ -27,17 +25,15 @@ public class PaySectionTest {
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        WebElement buttonCancelCookie = driver.findElement(By.xpath("//div[@class='cookie__buttons']/button[2]"));
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(buttonCancelCookie));
+            WebElement buttonCancelCookie = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[@class='cookie__buttons']/button[2]")));
             buttonCancelCookie.click();
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             System.out.println("Cookies нет.Кнопка 'Отказаться' не найдена.");
         }
-
         linkDetails = driver.findElement(By.linkText("Подробнее о сервисе"));
         Actions actions = new Actions(driver);
-        wait.until(ExpectedConditions.elementToBeClickable(linkDetails));
         actions.moveToElement(linkDetails).perform();
     }
 
@@ -54,7 +50,7 @@ public class PaySectionTest {
         Assert.assertEquals(textNamePayBlock.getText(), "Онлайн пополнение\nбез комиссии");
     }
 
-    @Test
+    @Test(enabled = false) // оптимизированный тест содержится в testPaymentsLogosSergei()
     public void testPaymentsLogos() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -74,6 +70,21 @@ public class PaySectionTest {
         int actualLogoCount = driver.findElements(By.xpath("//div[@class='pay__partners']//img")).size();
         softAssert.assertEquals(actualLogoCount, expectedLogoCount, "Количество логотипов не соответствует ожидаемому.");
 
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void testPaymentsLogosSergei() {
+        SoftAssert softAssert = new SoftAssert();
+
+        List<String> logoTypes = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
+
+        logoTypes.forEach(logo -> {
+            softAssert.assertTrue(isElementDisplayed(By.xpath(String.format("//img[@alt='%s']", logo))));
+        });
+
+        int actualLogoCount = driver.findElements(By.xpath("//div[@class='pay__partners']//img")).size();
+        softAssert.assertEquals(actualLogoCount, 5, "Количество логотипов не соответствует ожидаемому.");
         softAssert.assertAll();
     }
 
