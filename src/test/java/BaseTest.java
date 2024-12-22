@@ -6,26 +6,30 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import data.TestData;
 import pages.HomePage;
-import pages.PaymentPageIframe;
+import pages.PaymentIframePage;
 
 import java.util.Set;
 
 public class BaseTest {
     protected WebDriver driver;
-//    protected BasePage basePage;
     protected HomePage homePage;
-    protected PaymentPageIframe paymentPageIframe;
+    protected PaymentIframePage paymentPageIframe;
     protected String testNumber = TestData.getTEST_NUMBER();
     protected String testAmount = TestData.getTEST_AMOUNT();
-
+    protected String url = TestData.getURL();
 
     @BeforeMethod
     public void setUp() {
         driver = CommonActions.createDriver();
         clearCookiesAndLocalStorage();
         driver.manage().window().maximize();
+        open();
         initializePages();
         homePage.closeCookieModal();
+    }
+
+    public void open() {
+        driver.get(url);
     }
 
     private void clearCookiesAndLocalStorage() {
@@ -38,10 +42,8 @@ public class BaseTest {
     }
 
     private void initializePages() {
-//        basePage = new BasePage(driver);
         homePage = new HomePage(driver);
-        paymentPageIframe = new PaymentPageIframe(driver);
-        homePage.open();
+        paymentPageIframe = new PaymentIframePage(driver);
     }
 
     @AfterMethod

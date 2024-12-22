@@ -9,9 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
-    //TODO перевести driver в private?
-    protected WebDriver driver;
-    private WebDriverWait wait10;
+    private WebDriver driver;
+    private WebDriverWait wait5;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -21,19 +20,15 @@ public class BasePage {
         return driver;
     }
 
-    public void open(String url) {
-        getDriver().get(url);
-    }
-
-    protected WebDriverWait getWait10() {
-        if (wait10 == null) {
-            wait10 = new WebDriverWait(driver, Duration.ofSeconds(10));
+    protected WebDriverWait getWait5() {
+        if (wait5 == null) {
+            wait5 = new WebDriverWait(driver, Duration.ofSeconds(5));
         }
-        return wait10;
+        return wait5;
     }
 
     protected WebElement find(By locator) {
-        return getWait10().until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return getWait5().until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     protected void click(By locator) {
@@ -46,7 +41,7 @@ public class BasePage {
 
     public boolean isElementDisplayed(By locator) {
         try {
-            getWait10().until(ExpectedConditions.visibilityOfElementLocated(locator));
+            getWait5().until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
             return false;

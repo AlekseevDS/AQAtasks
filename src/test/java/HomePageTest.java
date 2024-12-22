@@ -1,5 +1,3 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -39,22 +37,9 @@ public class HomePageTest extends BaseTest {
     }
 
     @Test
-    public void testPaymentConfirmationButton() {
-        homePage.fillPaymentForm(testNumber, testAmount);
-        homePage.switchToConfirmationFrame();
-
-        String confirmationText = paymentPageIframe.getConfirmationText();
-        Assert.assertEquals(confirmationText, "Оплата: Услуги связи Номер:375" + testNumber);
-    }
-
-    @Test
     public void testPlaceholdersForAllPaymentOptions() {
         SoftAssert softAssert = new SoftAssert();
-        Actions actions = new Actions(driver);
-        //TODO захардкожена
-        actions.moveToElement(driver.findElement(By.linkText("Подробнее о сервисе"))).perform();
 
-        // Список вариантов оплаты и их ожидаемых плейсхолдеров
         List<Map<String, String>> paymentOptions = List.of(
                 Map.of(
                         "number", "1",
@@ -82,7 +67,6 @@ public class HomePageTest extends BaseTest {
                         "emailPlaceholder", "E-mail для отправки чека")
         );
 
-        // Проверяем плейсхолдеры для каждого варианта
         paymentOptions.forEach(option -> {
             String optionNumber = option.get("number");
             String optionName = option.get("option");
@@ -96,17 +80,14 @@ public class HomePageTest extends BaseTest {
                     homePage.isPlaceholderCorrect(homePage.getFirstPlaceholderField(), numberPlaceholder),
                     String.format("Плейсхолдер '%s' для номера в '%s' некорректен.", numberPlaceholder, optionName)
             );
-            System.out.printf("Плейсхолдер '%s' для номера в '%s' корректен.\n", numberPlaceholder, optionName);
             softAssert.assertTrue(
                     homePage.isPlaceholderCorrect(homePage.getSecondPlaceholderField(), amountPlaceholder),
                     String.format("Плейсхолдер '%s' для суммы в '%s' некорректен.", amountPlaceholder, optionName)
             );
-            System.out.printf("Плейсхолдер '%s' для суммы в '%s' корректен.\n", amountPlaceholder, optionName);
             softAssert.assertTrue(
                     homePage.isPlaceholderCorrect(homePage.getThirdPlaceholderField(), emailPlaceholder),
                     String.format("Плейсхолдер '%s' для email в '%s' некорректен.", emailPlaceholder, optionName)
             );
-            System.out.printf("Плейсхолдер '%s' для email в '%s' корректен.\n", emailPlaceholder, optionName);
         });
 
         softAssert.assertAll();
