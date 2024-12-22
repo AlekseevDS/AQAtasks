@@ -33,7 +33,7 @@ public class BasePage {
     }
 
     protected WebElement find(By locator) {
-        return wait10.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return getWait10().until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     protected void click(By locator) {
@@ -44,9 +44,9 @@ public class BasePage {
         find(locator).sendKeys(text);
     }
 
-    protected boolean isElementDisplayed(By locator) {
+    public boolean isElementDisplayed(By locator) {
         try {
-            wait10.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            getWait10().until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
             return false;
