@@ -3,7 +3,6 @@ package apiTest;
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.DisplayName;
 import org.testng.annotations.Test;
 
 import static specification.Specifications.requestSpecification;
@@ -11,7 +10,6 @@ import static specification.Specifications.requestSpecification;
 public class GetRequestTest {
 
     @Test
-    @DisplayName("Тестирование GET Request Woops c проверкой key/value")
     public void testGetRequestCheckResponseJsonBody() {
         RestAssured.given()
                 .spec(requestSpecification())
@@ -20,7 +18,6 @@ public class GetRequestTest {
                 .queryParam("foo2", "bar2")
                 .get("/get")
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
                 .body("args.foo1", Matchers.is("bar1"))
@@ -40,7 +37,6 @@ public class GetRequestTest {
     }
 
     @Test
-    @DisplayName("Тестирование POST Raw Text с проверкой key/value")
     public void testPostRawRequestCheckResponseJsonBody() {
         RestAssured.given()
                 .spec(requestSpecification())
@@ -50,7 +46,6 @@ public class GetRequestTest {
                 .body("{\n    \"test\": \"value\"\n}")
                 .post("/post")
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
                 .body("args", Matchers.anEmptyMap())
@@ -75,7 +70,6 @@ public class GetRequestTest {
     }
 
     @Test
-    @DisplayName("Тестирование POST Form Data с проверкой key/value")
     public void testPostFoemRequestCheckResponseJsonBody() {
         RestAssured.given()
                 .spec(requestSpecification())
@@ -86,7 +80,6 @@ public class GetRequestTest {
                 .formParam("foo2", "bar2")
                 .post("/post")
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
                 .body("args", Matchers.anEmptyMap())
@@ -113,7 +106,6 @@ public class GetRequestTest {
     }
 
     @Test
-    @DisplayName("Тестирование PUT-запроса с проверкой key/value")
     public void testPutRequestResponse() {
         RestAssured.given()
                 .spec(requestSpecification())
@@ -123,7 +115,6 @@ public class GetRequestTest {
                 .body("This is expected to be sent back as part of response body.")
                 .put("/put")
                 .then()
-                .log().all()
                 .assertThat()
                 .body("args", Matchers.anEmptyMap())
                 .body("data", Matchers.is("This is expected to be sent back as part of response body."))
@@ -145,42 +136,39 @@ public class GetRequestTest {
                 .body("url", Matchers.is("https://postman-echo.com/put"));
     }
 
-        @Test
-        @DisplayName("Тестирование PATCH-запроса с проверкой key/value")
-        public void testPatchRequestResponse() {
-            RestAssured.given()
-                    .spec(requestSpecification())
-                    .accept("*/*")
-                    .contentType("text/plain")
-                    .header("Accept-Encoding", "gzip, deflate, br")
-                    .body("This is expected to be sent back as part of response body.")
-                    .patch("/patch")
-                    .then()
-                    .log().all()
-                    .assertThat()
-                    .body("args", Matchers.anEmptyMap())
-                    .body("data", Matchers.is("This is expected to be sent back as part of response body."))
-                    .body("files", Matchers.anEmptyMap())
-                    .body("form", Matchers.anEmptyMap())
-                    .body("headers.host", Matchers.is("postman-echo.com"))
-                    .body("headers.x-request-start", Matchers.startsWith("t"))
-                    .body("headers.connection", Matchers.is("close"))
-                    .body("headers['content-length']", Matchers.is("58"))
-                    .body("headers['x-forwarded-proto']", Matchers.is("https"))
-                    .body("headers['x-forwarded-port']", Matchers.is("443"))
-                    .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
-                    .body("headers['content-type']", Matchers.containsString("text/plain"))
-                    .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
-                    .body("headers.accept", Matchers.is("*/*"))
-                    // postman-token не проверяется, т.к. запрос через RestAssured
-                    // cookie не проверяется
-                    .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
-                    .body("json", Matchers.nullValue())
-                    .body("url", Matchers.is("https://postman-echo.com/patch"));
-        }
+    @Test
+    public void testPatchRequestResponse() {
+        RestAssured.given()
+                .spec(requestSpecification())
+                .accept("*/*")
+                .contentType("text/plain")
+                .header("Accept-Encoding", "gzip, deflate, br")
+                .body("This is expected to be sent back as part of response body.")
+                .patch("/patch")
+                .then()
+                .assertThat()
+                .body("args", Matchers.anEmptyMap())
+                .body("data", Matchers.is("This is expected to be sent back as part of response body."))
+                .body("files", Matchers.anEmptyMap())
+                .body("form", Matchers.anEmptyMap())
+                .body("headers.host", Matchers.is("postman-echo.com"))
+                .body("headers.x-request-start", Matchers.startsWith("t"))
+                .body("headers.connection", Matchers.is("close"))
+                .body("headers['content-length']", Matchers.is("58"))
+                .body("headers['x-forwarded-proto']", Matchers.is("https"))
+                .body("headers['x-forwarded-port']", Matchers.is("443"))
+                .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
+                .body("headers['content-type']", Matchers.containsString("text/plain"))
+                .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
+                .body("headers.accept", Matchers.is("*/*"))
+                // postman-token не проверяется, т.к. запрос через RestAssured
+                // cookie не проверяется
+                .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
+                .body("json", Matchers.nullValue())
+                .body("url", Matchers.is("https://postman-echo.com/patch"));
+    }
 
     @Test
-    @DisplayName("Тестирование DELETE-запроса с проверкой key/value")
     public void testDeleteRequestResponse() {
         RestAssured.given()
                 .spec(requestSpecification())
@@ -190,7 +178,6 @@ public class GetRequestTest {
                 .body("This is expected to be sent back as part of response body.")
                 .delete("/delete")
                 .then()
-                .log().all()
                 .assertThat()
                 .body("args", Matchers.anEmptyMap())
                 .body("data", Matchers.is("This is expected to be sent back as part of response body."))
