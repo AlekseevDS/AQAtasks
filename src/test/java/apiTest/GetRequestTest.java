@@ -33,7 +33,8 @@ public class GetRequestTest {
                 .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
                 .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
                 .body("headers.accept", Matchers.is("*/*"))
-                //postman-token не проверяется,т.к. запрос через RestAssured
+                // postman-token не проверяется,т.к. запрос через RestAssured
+                // cookie не проверяется
                 .body("url", Matchers.is("https://postman-echo.com/get?foo1=bar1&foo2=bar2"));
 
     }
@@ -66,7 +67,8 @@ public class GetRequestTest {
                 .body("headers['content-type']", Matchers.containsString("text/plain"))
                 .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
                 .body("headers.accept", Matchers.is("*/*"))
-                //postman-token не проверяется,т.к. запрос через RestAssured
+                // postman-token не проверяется,т.к. запрос через RestAssured
+                // cookie не проверяется
                 .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
                 .body("json", Matchers.nullValue())
                 .body("url", Matchers.is("https://postman-echo.com/post"));
@@ -102,11 +104,113 @@ public class GetRequestTest {
                 .body("headers['content-type']", Matchers.containsString("application/x-www-form-urlencoded"))
                 .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
                 .body("headers.accept", Matchers.is("*/*"))
-                //postman-token не проверяется,т.к. запрос через RestAssured
+                // postman-token не проверяется,т.к. запрос через RestAssured
+                // cookie не проверяется
                 .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
                 .body("json.foo1", Matchers.is("bar1"))
                 .body("json.foo2", Matchers.is("bar2"))
                 .body("url", Matchers.is("https://postman-echo.com/post"));
+    }
+
+    @Test
+    @DisplayName("Тестирование PUT-запроса с проверкой key/value")
+    public void testPutRequestResponse() {
+        RestAssured.given()
+                .spec(requestSpecification())
+                .accept("*/*")
+                .contentType("text/plain")
+                .header("Accept-Encoding", "gzip, deflate, br")
+                .body("This is expected to be sent back as part of response body.")
+                .put("/put")
+                .then()
+                .log().all()
+                .assertThat()
+                .body("args", Matchers.anEmptyMap())
+                .body("data", Matchers.is("This is expected to be sent back as part of response body."))
+                .body("files", Matchers.anEmptyMap())
+                .body("form", Matchers.anEmptyMap())
+                .body("headers.host", Matchers.is("postman-echo.com"))
+                .body("headers.x-request-start", Matchers.startsWith("t"))
+                .body("headers.connection", Matchers.is("close"))
+                .body("headers['content-length']", Matchers.is("58"))
+                .body("headers['x-forwarded-proto']", Matchers.is("https"))
+                .body("headers['x-forwarded-port']", Matchers.is("443"))
+                .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
+                .body("headers['content-type']", Matchers.containsString("text/plain"))
+                .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
+                .body("headers.accept", Matchers.is("*/*"))
+                // postman-token не проверяется,т.к. запрос через RestAssured
+                // cookie не проверяется
+                .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
+                .body("url", Matchers.is("https://postman-echo.com/put"));
+    }
+
+        @Test
+        @DisplayName("Тестирование PATCH-запроса с проверкой key/value")
+        public void testPatchRequestResponse() {
+            RestAssured.given()
+                    .spec(requestSpecification())
+                    .accept("*/*")
+                    .contentType("text/plain")
+                    .header("Accept-Encoding", "gzip, deflate, br")
+                    .body("This is expected to be sent back as part of response body.")
+                    .patch("/patch")
+                    .then()
+                    .log().all()
+                    .assertThat()
+                    .body("args", Matchers.anEmptyMap())
+                    .body("data", Matchers.is("This is expected to be sent back as part of response body."))
+                    .body("files", Matchers.anEmptyMap())
+                    .body("form", Matchers.anEmptyMap())
+                    .body("headers.host", Matchers.is("postman-echo.com"))
+                    .body("headers.x-request-start", Matchers.startsWith("t"))
+                    .body("headers.connection", Matchers.is("close"))
+                    .body("headers['content-length']", Matchers.is("58"))
+                    .body("headers['x-forwarded-proto']", Matchers.is("https"))
+                    .body("headers['x-forwarded-port']", Matchers.is("443"))
+                    .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
+                    .body("headers['content-type']", Matchers.containsString("text/plain"))
+                    .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
+                    .body("headers.accept", Matchers.is("*/*"))
+                    // postman-token не проверяется, т.к. запрос через RestAssured
+                    // cookie не проверяется
+                    .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
+                    .body("json", Matchers.nullValue())
+                    .body("url", Matchers.is("https://postman-echo.com/patch"));
+        }
+
+    @Test
+    @DisplayName("Тестирование DELETE-запроса с проверкой key/value")
+    public void testDeleteRequestResponse() {
+        RestAssured.given()
+                .spec(requestSpecification())
+                .accept("*/*")
+                .contentType("text/plain")
+                .header("Accept-Encoding", "gzip, deflate, br")
+                .body("This is expected to be sent back as part of response body.")
+                .delete("/delete")
+                .then()
+                .log().all()
+                .assertThat()
+                .body("args", Matchers.anEmptyMap())
+                .body("data", Matchers.is("This is expected to be sent back as part of response body."))
+                .body("files", Matchers.anEmptyMap())
+                .body("form", Matchers.anEmptyMap())
+                .body("headers.host", Matchers.is("postman-echo.com"))
+                .body("headers.x-request-start", Matchers.startsWith("t"))
+                .body("headers.connection", Matchers.is("close"))
+                .body("headers['content-length']", Matchers.is("58"))
+                .body("headers['x-forwarded-proto']", Matchers.is("https"))
+                .body("headers['x-forwarded-port']", Matchers.is("443"))
+                .body("headers['x-amzn-trace-id']", Matchers.startsWith("Root="))
+                .body("headers['content-type']", Matchers.containsString("text/plain"))
+                .body("headers['user-agent']", Matchers.containsString("PostmanRuntime"))
+                .body("headers.accept", Matchers.is("*/*"))
+                // postman-token не проверяется, т.к. запрос через RestAssured
+                // cookie не проверяется
+                .body("headers['accept-encoding']", Matchers.is("gzip, deflate, br"))
+                .body("json", Matchers.nullValue())
+                .body("url", Matchers.is("https://postman-echo.com/delete"));
     }
 }
 

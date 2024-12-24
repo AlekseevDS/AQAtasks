@@ -15,20 +15,20 @@ public class Specifications {
 
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
-                .setBaseUri("https://postman-echo.com/")//---> Cтартовая URL
+                .setBaseUri("https://postman-echo.com/")
                 .addHeader("User-Agent", "PostmanRuntime/7.43.0")
-                .setRelaxedHTTPSValidation()//---> Отключение проверки сертификата
-                .setContentType(JSON)//---> Установка Content Type
-                .setAccept(JSON)//---> Установка Accept
+                .setRelaxedHTTPSValidation()// Отключение проверки сертификата
+                .setContentType(JSON)
+                .setAccept(JSON)
                 .build();
     }
 
     public static ResponseSpecification responseSpecificationScOk() {
         return new ResponseSpecBuilder()
-                .log(LogDetail.STATUS)//---> Уровень логирования
-                .expectContentType(JSON)//---> Ожидаемый Content Type
-                .expectStatusCode(HttpStatus.SC_OK)//---> Ожидаемый Status Code
-                .expectResponseTime(lessThanOrEqualTo(3L), SECONDS)//---> Ожидаемое время ответа максимум 3 секунды
+                .log(LogDetail.STATUS)// Уровень логирования
+                .expectContentType(JSON)
+                .expectStatusCode(HttpStatus.SC_OK)
+                .expectResponseTime(lessThanOrEqualTo(3L), SECONDS)
                 .build();
     }
 
