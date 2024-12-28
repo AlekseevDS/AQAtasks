@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -51,6 +52,7 @@ public class PaymentIframePage extends BasePage {
 
     }
 
+    @Step("Проверка отображения logo {logoSvg}")
     public boolean isLogoDisplayedIframe(String logoSvg) {
         By logoLocator = By.xpath(String.format("//img[@src='assets/images/payment-icons/card-types/%s.svg']", logoSvg));
         return isElementDisplayed(logoLocator);

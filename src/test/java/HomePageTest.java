@@ -1,3 +1,7 @@
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -7,14 +11,22 @@ import java.util.Map;
 
 public class HomePageTest extends BaseTest {
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Description(value = "Тест проверяет текст заголовка блока платежей")
     public void testNamePayBlock() {
         String payBlockName = homePage.getPayBlockText();
         Assert.assertEquals(payBlockName, "Онлайн пополнение\n" + "без комиссии");
     }
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Description(value = "Тест проверяет отображение логотипов платежных систем")
+    @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {
+
         SoftAssert softAssert = new SoftAssert();
 
         List<String> logoTypes = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
@@ -29,14 +41,21 @@ public class HomePageTest extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Description(value = "Тест проверяет работу ссылки 'Подробнее о сервисе'")
     public void testLinkDetails() {
         homePage.clickDetailsLink();
         Assert.assertEquals(driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
         Assert.assertTrue(homePage.isHeaderDetailsPageDisplayed());
+        saveScreenshotPNG(driver);
     }
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Description(value = "Тест проверяет отображение плейсхолдеров в полях блока платежей (Main Page)")
     public void testPlaceholdersForAllPaymentOptions() {
         SoftAssert softAssert = new SoftAssert();
 

@@ -1,3 +1,7 @@
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -7,7 +11,11 @@ import java.util.Map;
 
 public class PaymentIframePageTest extends BaseTest {
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Description(value = "Тест проверяет отображение текста и корректных данных подтверждения оплаты")
+
     public void testPaymentConfirmationTextAndAmount() {
         homePage.fillPaymentForm(testNumber, testAmount);
         homePage.switchToConfirmationFrame();
@@ -22,7 +30,10 @@ public class PaymentIframePageTest extends BaseTest {
         Assert.assertEquals(confirmationTextButtonAmount, "Оплатить " + testAmount + " BYN");
     }
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Description(value = "Тест проверяет отображение плейсхолдеров в полях данных платежной карты")
     public void testCardInputPlaceholders() {
         homePage.fillPaymentForm(testNumber, testAmount);
         homePage.switchToConfirmationFrame();
@@ -42,7 +53,11 @@ public class PaymentIframePageTest extends BaseTest {
         });
     }
 
+    @Epic(value = "Оплата услуг")
+    @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Description(value = "Тест проверяет отображение логотипов платежных систем")
+    @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {
         homePage.fillPaymentForm(testNumber, testAmount);
         homePage.switchToConfirmationFrame();
@@ -54,7 +69,7 @@ public class PaymentIframePageTest extends BaseTest {
                 "mastercard-system",
                 "belkart-system",
                 "maestro-system",
-                "mir-system-ru");
+                "mir-system");
 
         for (String logo : logoTypes) {
 
@@ -66,5 +81,4 @@ public class PaymentIframePageTest extends BaseTest {
         softAssert.assertEquals(actualLogoCount, 5, "Количество логотипов не соответствует ожидаемому.");
         softAssert.assertAll();
     }
-
 }

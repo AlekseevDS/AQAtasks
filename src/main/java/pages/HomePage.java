@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -60,16 +61,19 @@ public class HomePage extends BasePage {
         return isElementDisplayed(detailsPageHeader);
     }
 
+    @Step("Заполнение формы данными (Тел: {phone}, Сумма: {amount}")
     public void fillPaymentForm(String phone, String amount) {
         sendKeys(phoneInput, phone);
         sendKeys(amountInput, amount);
         click(submitButton);
     }
 
+    @Step("Открытие iFrame 'confirmationFrame' ")
     public void switchToConfirmationFrame() {
         getWait5().until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(confirmationFrame));
     }
 
+    @Step("Проверка отображения logo {logoAltText}")
     public boolean isLogoDisplayed(String logoAltText) {
         By logoLocator = By.xpath(String.format("//img[@alt='%s']", logoAltText));
         return isElementDisplayed(logoLocator);
@@ -79,8 +83,8 @@ public class HomePage extends BasePage {
         return getDriver().findElements(paymentIcons).size();
     }
 
+    @Step("Выбор платежной опции: {optionName}")
     public void selectPaymentOption(String optionNumber, String optionName) {
-
         click(paymentDropdown);
         By optionLocator = By.xpath(String.format("//ul[@class='select__list']/li[%s]/p[contains(text(),'%s')]",
                 optionNumber, optionName));
@@ -90,6 +94,7 @@ public class HomePage extends BasePage {
         js.executeScript("arguments[0].click();", element);
     }
 
+    @Step("Проверка плейсхолдера: expectedPlaceholder")
     public boolean isPlaceholderCorrect(By fieldLocator, String expectedPlaceholder) {
         WebElement field = find(fieldLocator);
         String actualPlaceholder = (String) ((JavascriptExecutor) getDriver())

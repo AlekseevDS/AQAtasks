@@ -1,7 +1,6 @@
-import org.openqa.selenium.Cookie;
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.*;
 import common.CommonActions;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import data.TestData;
@@ -52,4 +51,10 @@ public class BaseTest {
             driver.quit();
         }
     }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] saveScreenshotPNG(WebDriver driver) {
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
+
 }
