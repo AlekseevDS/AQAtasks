@@ -101,7 +101,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${allure.results.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/allure-results</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/test/resources</directory>

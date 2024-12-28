@@ -9,14 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
-    private WebDriver driver;
+    private static WebDriver driver;
     private WebDriverWait wait5;
 
     public BasePage(WebDriver driver) {
-        this.driver = driver;
+        BasePage.driver = driver;
     }
 
-    protected WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return driver;
     }
 

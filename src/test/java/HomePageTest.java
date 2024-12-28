@@ -1,7 +1,4 @@
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,6 +11,7 @@ public class HomePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет текст заголовка блока платежей")
     public void testNamePayBlock() {
         String payBlockName = homePage.getPayBlockText();
@@ -23,6 +21,7 @@ public class HomePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение логотипов платежных систем")
     @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {
@@ -44,6 +43,7 @@ public class HomePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет работу ссылки 'Подробнее о сервисе'")
     public void testLinkDetails() {
         homePage.clickDetailsLink();
@@ -55,6 +55,7 @@ public class HomePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей (Main Page)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение плейсхолдеров в полях блока платежей (Main Page)")
     public void testPlaceholdersForAllPaymentOptions() {
         SoftAssert softAssert = new SoftAssert();

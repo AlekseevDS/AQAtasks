@@ -1,7 +1,4 @@
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,6 +11,7 @@ public class PaymentIframePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение текста и корректных данных подтверждения оплаты")
 
     public void testPaymentConfirmationTextAndAmount() {
@@ -33,6 +31,7 @@ public class PaymentIframePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение плейсхолдеров в полях данных платежной карты")
     public void testCardInputPlaceholders() {
         homePage.fillPaymentForm(testNumber, testAmount);
@@ -56,6 +55,7 @@ public class PaymentIframePageTest extends BaseTest {
     @Epic(value = "Оплата услуг")
     @Feature(value = "Блок платежей. Детали оплаты (iFrame)")
     @Test
+    @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение логотипов платежных систем")
     @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {

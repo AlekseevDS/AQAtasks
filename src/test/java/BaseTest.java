@@ -4,11 +4,13 @@ import common.CommonActions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import data.TestData;
+import org.testng.annotations.Listeners;
 import pages.HomePage;
 import pages.PaymentIframePage;
 
 import java.util.Set;
 
+@Listeners({CustomTestListener.class})
 public class BaseTest {
     protected WebDriver driver;
     protected HomePage homePage;
@@ -56,5 +58,4 @@ public class BaseTest {
     public byte[] saveScreenshotPNG(WebDriver driver) {
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
-
 }
