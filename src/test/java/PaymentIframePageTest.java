@@ -57,7 +57,6 @@ public class PaymentIframePageTest extends BaseTest {
     @Test
     @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение логотипов платежных систем")
-    @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {
         homePage.fillPaymentForm(testNumber, testAmount);
         homePage.switchToConfirmationFrame();

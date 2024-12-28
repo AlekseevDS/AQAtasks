@@ -21,7 +21,7 @@ public class CustomTestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        System.out.println("I am in onTestFailure method " + getTestMethodName(result) + " failed");
+        System.out.println("In onTestFailure method " + getTestMethodName(result) + " failed");
         WebDriver driver = BasePage.getDriver();
         // Allure ScreenShotRobot and SaveTestLog
         if (driver != null) {

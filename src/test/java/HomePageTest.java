@@ -23,7 +23,6 @@ public class HomePageTest extends BaseTest {
     @Test
     @Owner("AlekseevDS")
     @Description(value = "Тест проверяет отображение логотипов платежных систем")
-    @Step("Количество лого в платежном блоке на главной странице: {actualLogoCount}")
     public void testPaymentsLogos() {
 
         SoftAssert softAssert = new SoftAssert();

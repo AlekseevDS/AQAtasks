@@ -78,7 +78,7 @@ public class HomePage extends BasePage {
         By logoLocator = By.xpath(String.format("//img[@alt='%s']", logoAltText));
         return isElementDisplayed(logoLocator);
     }
-
+    @Step("Проверка количества логотипов")
     public int getPaymentLogosCount() {
         return getDriver().findElements(paymentIcons).size();
     }
@@ -94,7 +94,7 @@ public class HomePage extends BasePage {
         js.executeScript("arguments[0].click();", element);
     }
 
-    @Step("Проверка плейсхолдера: expectedPlaceholder")
+    @Step("Проверка плейсхолдера: {expectedPlaceholder}")
     public boolean isPlaceholderCorrect(By fieldLocator, String expectedPlaceholder) {
         WebElement field = find(fieldLocator);
         String actualPlaceholder = (String) ((JavascriptExecutor) getDriver())

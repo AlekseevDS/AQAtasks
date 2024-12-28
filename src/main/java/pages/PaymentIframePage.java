@@ -58,7 +58,7 @@ public class PaymentIframePage extends BasePage {
         return isElementDisplayed(logoLocator);
     }
 
-    // Метод для получения количества логотипов
+    @Step("Проверка количества логотипов")
     public int getPaymentLogosCountIframe() {
         return getDriver().findElements(paymentIconsIframe).size();
     }
