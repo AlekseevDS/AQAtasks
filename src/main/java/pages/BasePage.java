@@ -11,6 +11,7 @@ import java.time.Duration;
 public class BasePage {
     private static WebDriver driver;
     private WebDriverWait wait5;
+    private WebDriverWait wait10;
 
     public BasePage(WebDriver driver) {
         BasePage.driver = driver;
@@ -25,6 +26,13 @@ public class BasePage {
             wait5 = new WebDriverWait(driver, Duration.ofSeconds(5));
         }
         return wait5;
+    }
+
+    protected WebDriverWait getWait10() {
+        if (wait10 == null) {
+            wait10 = new WebDriverWait(driver, Duration.ofSeconds(10));
+        }
+        return wait10;
     }
 
     protected WebElement find(By locator) {
